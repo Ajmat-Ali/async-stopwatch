@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>stopwatch</title>
+    <style>
+        #timer{
+            width: 70%;
+            margin: auto;
+            /* border: 2px solid red; */
+        }
+        div button{
+            padding: 10px;
+            margin: 30px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Stop Watch</h1>
+    <div id="timer">
+        00:00:00
+    </div>
+    <div>
+        <button class="strt">Start</button>
+        <button class="rst">Reset</button>
+    </div>
+</body>
+<script>
+    alert("Initially Minute and Hour will not Display. \n\n It will Display when Increase")
+    let timer = document.getElementById("timer");
+    function dTimer(){
+        let start = document.querySelector(".strt");
+        let reset = document.querySelector(".rst");
+
+        let hours = 0;
+        let minute = 0;
+        let second = 0;
+        let miliSecond = 0;
+
+        let id ;
+        let track = false;
+
+        start.addEventListener("click",()=>{
+            if(track){
+                track = false;
+                start.textContent="Start"
+                clearInterval(id);
+            }
+            else{
+                track = true;
+                start.textContent="Pause"
+                id = setInterval(()=>{
+                    second++;
+                    let hrs = Math.floor(second/3600);
+                    let min = Math.floor(second/60)%60;
+                    // min = Math.floor(min%60);
+                    let sec = Math.floor(second%60);
+                    // console.log(min,second);
+                    if(hrs == 0){
+                        // timer.textContent=` ${sec}`;
+                        if(min==0){
+                            timer.textContent=` ${sec}`;
+                        }else{
+                            timer.textContent=` ${min} : ${sec}`;
+                        }
+                    }
+                    else{
+                        timer.textContent=`${hrs} : ${min} : ${sec}`;
+                    }
+                 },1000)
+            }
+        })
+        reset.addEventListener('click',()=>{
+            track = false;
+            start.textContent="Start"
+            clearInterval(id);
+            second=0;
+            timer.textContent=`00 : 00 : 00`;
+        })
+        
+    }
+    dTimer()
+</script>
+</html>
